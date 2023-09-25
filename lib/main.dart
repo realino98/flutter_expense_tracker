@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expense_tracker/provider/transactionProvider.dart';
 import 'package:flutter_expense_tracker/screens/dashboard_screen.dart';
 import 'package:flutter_expense_tracker/screens/profile_screen.dart';
 import 'package:flutter_expense_tracker/screens/transaction_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +22,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      // home: HomeScreen(),
+      home: ChangeNotifierProvider(
+        create: (context) => TransactionManager(),
+        child: HomeScreen(),
+      ),
     );
   }
 }
