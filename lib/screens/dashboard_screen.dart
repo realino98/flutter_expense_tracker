@@ -41,71 +41,75 @@ class DashboardScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             boxShadow: List.empty(),
                             color: Color.fromARGB(255, 0, 130, 139)),
-                        child: Column(
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "Grand Total",
-                                  textScaleFactor: 2,
-                                ),
-                                Text(
-                                  'Rp. ${12341234}',
-                                  textScaleFactor: 3,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 70,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      "Income",
-                                      textScaleFactor: 2,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.arrow_downward,
-                                          size: 50,
-                                          color: Colors.green,
-                                        ),
-                                        Text(
-                                          "Rp. 40.000",
-                                          textScaleFactor: 2.5,
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      "Outcome",
-                                      textScaleFactor: 2,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.arrow_upward,
-                                          size: 50,
-                                          color: Colors.red,
-                                        ),
-                                        Text(
-                                          "Rp. 40.000",
-                                          textScaleFactor: 2.5,
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    "Total Balance",
+                                    textScaleFactor: 2,
+                                  ),
+                                  Text(
+                                    "Rp. ${value.countBalaceTotal()}",
+                                    textScaleFactor: 3,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "Income",
+                                        textScaleFactor: 2,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.arrow_downward,
+                                            size: 50,
+                                            color: Colors.green,
+                                          ),
+                                          Text(
+                                            "Rp. ${value.countIncome()}",
+                                            textScaleFactor: 2.5,
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "Outcome",
+                                        textScaleFactor: 2,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.arrow_upward,
+                                            size: 50,
+                                            color: Colors.red,
+                                          ),
+                                          Text(
+                                            "Rp. ${value.countOutcome()}",
+                                            textScaleFactor: 2.5,
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -119,10 +123,10 @@ class DashboardScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return ListTile(
                         leading: value.transactions[index].isIncome
-                            ? Icon(Icons.arrow_upward, color: Colors.green)
+                            ? Icon(Icons.arrow_upward, color: Colors.red)
                             : Icon(
                                 Icons.arrow_downward,
-                                color: Colors.red,
+                                color: Colors.green,
                               ),
                         title:
                             Text(value.transactions[index].amount.toString()),
