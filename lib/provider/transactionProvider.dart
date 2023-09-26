@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_expense_tracker/models/transaction_model.dart';
-
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class TransactionManager extends ChangeNotifier {
+  var formatter = NumberFormat('#,###');
   final List<Transaction> _transactions = <Transaction>[
     Transaction(amount: 10000, isIncome: true, needs: "food", source: 1),
     Transaction(amount: 10000, isIncome: false, needs: "food", source: 1)
@@ -27,15 +27,16 @@ class TransactionManager extends ChangeNotifier {
       for (int i = 0; i < transactions_to_count.length; i++) {
         total += _transactions[i].amount;
       }
-      return total.toString();
-    } else {
-      print("empty");
-      return "0";
+
+      return total;
     }
   }
 
   countBalaceTotal() {
-    return countTotal(_transactions);
+    // return countIncome() - countOutcome();
+    var total =
+        formatter.format(int.parse(countIncome()) - int.parse(countOutcome()));
+    return total;
   }
 
   countIncome() {
@@ -43,8 +44,10 @@ class TransactionManager extends ChangeNotifier {
         .where((element) => element.isIncome == true)
         .toList()
         .isNotEmpty) {
-      return countTotal(
-          _transactions.where((element) => element.isIncome == true).toList());
+      return (countTotal(_transactions
+              .where((element) => element.isIncome == true)
+              .toList())
+          .toString());
     }
   }
 
@@ -53,8 +56,10 @@ class TransactionManager extends ChangeNotifier {
         .where((element) => element.isIncome == false)
         .toList()
         .isNotEmpty) {
-      return countTotal(
-          _transactions.where((element) => element.isIncome == true).toList());
+      return countTotal(_transactions
+              .where((element) => element.isIncome == false)
+              .toList())
+          .toString();
     }
   }
 }

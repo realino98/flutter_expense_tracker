@@ -40,7 +40,7 @@ class DashboardScreen extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                             boxShadow: List.empty(),
-                            color: Color.fromARGB(255, 0, 130, 139)),
+                            color: Color.fromARGB(255, 52, 96, 216)),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -143,7 +143,7 @@ class DashboardScreen extends StatelessWidget {
             onPressed: () {
               value.addTransaction(
                 Transaction(
-                  amount: 10000,
+                  amount: 10123,
                   isIncome: true,
                   needs: "Food",
                   source: 0,
