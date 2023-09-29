@@ -4,12 +4,17 @@ import 'package:intl/intl.dart';
 
 class TransactionManager extends ChangeNotifier {
   var formatter = NumberFormat('#,###');
+  int _cardSelected = 1;
   final List<Transaction> _transactions = <Transaction>[
     Transaction(amount: 10000, isIncome: true, needs: "food", source: 1),
-    Transaction(amount: 10000, isIncome: false, needs: "food", source: 1)
+    Transaction(amount: 10000, isIncome: true, needs: "food", source: 1),
+    Transaction(amount: 10000, isIncome: true, needs: "food", source: 1),
+    Transaction(amount: 10000, isIncome: false, needs: "food", source: 2),
+    Transaction(amount: 11200, isIncome: false, needs: "food", source: 2),
   ];
 
   List<Transaction> get transactions => List.unmodifiable(_transactions);
+  int get cardSelected => _cardSelected;
 
   void addTransaction(Transaction transaction) {
     _transactions.add(transaction);
@@ -49,6 +54,7 @@ class TransactionManager extends ChangeNotifier {
               .toList())
           .toString());
     }
+    notifyListeners();
   }
 
   countOutcome() {
@@ -61,5 +67,12 @@ class TransactionManager extends ChangeNotifier {
               .toList())
           .toString();
     }
+    notifyListeners();
+  }
+
+  cardSelect(int selected) {
+    _cardSelected = selected;
+    print("Card Selected : ${_cardSelected}");
+    notifyListeners();
   }
 }

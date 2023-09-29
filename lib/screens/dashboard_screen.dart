@@ -13,6 +13,9 @@ class DashboardScreen extends StatelessWidget {
     return Consumer<TransactionManager>(
       builder: (context, value, child) {
         // List amount = value.transactions.map((e) => e.amount).toList();
+        var transactionData = value.transactions
+            .where((element) => element.source == value.cardSelected)
+            .toList();
         return Scaffold(
           body: SafeArea(
             child: Column(
@@ -22,10 +25,17 @@ class DashboardScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("Name"),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.more_vert),
+                      ElevatedButton(
+                        onPressed: () => value.cardSelect(0),
+                        child: Text("Card 0"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => value.cardSelect(1),
+                        child: Text("Card 1"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => value.cardSelect(2),
+                        child: Text("Card 2"),
                       ),
                     ],
                   ),
@@ -119,18 +129,18 @@ class DashboardScreen extends StatelessWidget {
                 Expanded(
                   flex: 5,
                   child: ListView.builder(
-                    itemCount: value.transactions.length,
+                    itemCount: transactionData.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        leading: value.transactions[index].isIncome
-                            ? Icon(Icons.arrow_upward, color: Colors.red)
+                        leading: transactionData[index].isIncome
+                            ? Icon(Icons.arrow_downward, color: Colors.green)
                             : Icon(
-                                Icons.arrow_downward,
-                                color: Colors.green,
+                                Icons.arrow_upward,
+                                color: Colors.red,
                               ),
-                        title:
-                            Text(value.transactions[index].amount.toString()),
-                        subtitle: Text(value.transactions[index].needs),
+                        trailing: Text(
+                            "Rp. ${transactionData[index].amount.toString()}"),
+                        subtitle: Text(transactionData[index].needs),
                       );
                     },
                   ),
@@ -144,8 +154,8 @@ class DashboardScreen extends StatelessWidget {
               value.addTransaction(
                 Transaction(
                   amount: 10123,
-                  isIncome: true,
-                  needs: "Food",
+                  isIncome: false,
+                  needs: "Entertainment",
                   source: 0,
                 ),
               );
