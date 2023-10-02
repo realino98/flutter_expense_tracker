@@ -6,14 +6,54 @@ class TransactionManager extends ChangeNotifier {
   var formatter = NumberFormat('#,###');
   int _cardSelected = 1;
   final List<Transaction> _transactions = <Transaction>[
-    Transaction(amount: 10000, isIncome: true, needs: "food", source: 1),
-    Transaction(amount: 10000, isIncome: true, needs: "food", source: 1),
-    Transaction(amount: 10000, isIncome: true, needs: "food", source: 1),
-    Transaction(amount: 10000, isIncome: false, needs: "food", source: 2),
-    Transaction(amount: 11200, isIncome: false, needs: "food", source: 2),
+    Transaction(
+        amount: 10000,
+        isIncome: true,
+        needs: "food",
+        source: 1,
+        dateTime: DateTime.now()),
+    Transaction(
+        amount: 10000,
+        isIncome: true,
+        needs: "food",
+        source: 1,
+        dateTime: DateTime.now()),
+    Transaction(
+        amount: 10000,
+        isIncome: true,
+        needs: "food",
+        source: 1,
+        dateTime: DateTime.now()),
+    Transaction(
+        amount: 10000,
+        isIncome: false,
+        needs: "food",
+        source: 1,
+        dateTime: DateTime.now()),
+    Transaction(
+        amount: 10000,
+        isIncome: false,
+        needs: "food",
+        source: 1,
+        dateTime: DateTime.now()),
+    Transaction(
+        amount: 10000,
+        isIncome: false,
+        needs: "food",
+        source: 2,
+        dateTime: DateTime.now()),
+    Transaction(
+        amount: 10000,
+        isIncome: true,
+        needs: "food",
+        source: 0,
+        dateTime: DateTime.now()),
   ];
 
   List<Transaction> get transactions => List.unmodifiable(_transactions);
+  List<Transaction> get transactionsFiltered => _transactions
+      .where((element) => element.source == _cardSelected)
+      .toList();
   int get cardSelected => _cardSelected;
 
   void addTransaction(Transaction transaction) {
@@ -28,12 +68,9 @@ class TransactionManager extends ChangeNotifier {
 
   countTotal(List<Transaction> transactions_to_count) {
     if (_transactions.isNotEmpty) {
-      var total = 0;
-      for (int i = 0; i < transactions_to_count.length; i++) {
-        total += _transactions[i].amount;
-      }
-
-      return total;
+      return transactions_to_count
+          .map((e) => e.amount)
+          .reduce((value, element) => value + element);
     }
   }
 
@@ -45,34 +82,37 @@ class TransactionManager extends ChangeNotifier {
   }
 
   countIncome() {
-    if (_transactions
+    if (transactionsFiltered
         .where((element) => element.isIncome == true)
         .toList()
         .isNotEmpty) {
-      return (countTotal(_transactions
+      return (countTotal(transactionsFiltered
               .where((element) => element.isIncome == true)
               .toList())
           .toString());
+    } else {
+      return "0";
     }
-    notifyListeners();
   }
 
   countOutcome() {
-    if (_transactions
+    if (transactionsFiltered
         .where((element) => element.isIncome == false)
         .toList()
         .isNotEmpty) {
-      return countTotal(_transactions
+      return countTotal(transactionsFiltered
               .where((element) => element.isIncome == false)
               .toList())
           .toString();
+    } else {
+      return "0";
     }
-    notifyListeners();
   }
 
   cardSelect(int selected) {
     _cardSelected = selected;
     print("Card Selected : ${_cardSelected}");
+    print(transactionsFiltered.map((e) => e.isIncome));
     notifyListeners();
   }
 }

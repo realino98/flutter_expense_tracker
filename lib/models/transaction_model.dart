@@ -5,12 +5,14 @@ class Transaction {
   final bool isIncome;
   final int amount;
   final int source;
+  final DateTime dateTime;
 
   Transaction({
     required this.source,
     required this.needs,
     required this.isIncome,
     required this.amount,
+    required this.dateTime,
   });
 
   factory Transaction.fromJson(data) {
@@ -19,6 +21,7 @@ class Transaction {
       needs: data['needs'],
       isIncome: data['isIncome'],
       amount: data['amount'],
+      dateTime: data['dateTime'],
     );
   }
 }
