@@ -95,7 +95,7 @@ class TransactionScreen extends StatelessWidget {
                                       Row(
                                         children: [
                                           Icon(
-                                            Icons.arrow_downward,
+                                            Icons.arrow_downward_rounded,
                                             size: 50,
                                             color: Colors.green,
                                           ),
@@ -124,7 +124,7 @@ class TransactionScreen extends StatelessWidget {
                                       Row(
                                         children: [
                                           Icon(
-                                            Icons.arrow_upward,
+                                            Icons.arrow_upward_rounded,
                                             size: 50,
                                             color: Colors.red,
                                           ),
@@ -158,10 +158,11 @@ class TransactionScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       DateTime transactionTime =
                           transactionData[index].dateTime;
-                      var dateFormatter = new DateFormat('yyyy-MM-dd ');
+                      var dateFormatter = new DateFormat('yyyy-MM-dd');
                       var timeFormatter = new DateFormat('hh:mm');
+                      bool isIncome = transactionData[index].isIncome;
                       return ListTile(
-                        leading: transactionData[index].isIncome
+                        leading: isIncome
                             ? Icon(
                                 Icons.arrow_downward_rounded,
                                 color: Colors.green,
@@ -179,11 +180,27 @@ class TransactionScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        subtitle: Text(
-                          "Rp. ${transactionData[index].amount.toString()}",
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
+                        subtitle: Row(
+                          children: [
+                            isIncome
+                                ? Icon(
+                                    Icons.add_rounded,
+                                    size: 15,
+                                  )
+                                : Icon(
+                                    Icons.remove_rounded,
+                                    size: 15,
+                                  ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Rp. ${transactionData[index].amount.toString()}",
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
                         ),
                         trailing: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,

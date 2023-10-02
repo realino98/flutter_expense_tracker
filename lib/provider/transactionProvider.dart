@@ -5,47 +5,48 @@ import 'package:intl/intl.dart';
 class TransactionManager extends ChangeNotifier {
   var formatter = NumberFormat('#,###');
   int _cardSelected = 1;
+  DateTime _currentDate = DateTime.now();
   final List<Transaction> _transactions = <Transaction>[
     Transaction(
-        amount: 10000,
+        amount: 1000000,
         isIncome: true,
-        needs: "food",
-        source: 1,
-        dateTime: DateTime.now()),
-    Transaction(
-        amount: 10000,
-        isIncome: true,
-        needs: "food",
+        needs: "Salary",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
         amount: 10000,
         isIncome: true,
-        needs: "food",
+        needs: "Food",
+        source: 1,
+        dateTime: DateTime.now()),
+    Transaction(
+        amount: 10000,
+        isIncome: true,
+        needs: "Food",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
         amount: 10000,
         isIncome: false,
-        needs: "food",
+        needs: "Food",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
         amount: 10000,
         isIncome: false,
-        needs: "food",
+        needs: "Food",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
         amount: 10000,
         isIncome: false,
-        needs: "food",
+        needs: "Food",
         source: 2,
         dateTime: DateTime.now()),
     Transaction(
         amount: 10000,
         isIncome: true,
-        needs: "food",
+        needs: "Food",
         source: 0,
         dateTime: DateTime.now()),
   ];
@@ -55,6 +56,7 @@ class TransactionManager extends ChangeNotifier {
       .where((element) => element.source == _cardSelected)
       .toList();
   int get cardSelected => _cardSelected;
+  int get currentMonth => int.parse(DateFormat("mm").format(_currentDate));
 
   void addTransaction(Transaction transaction) {
     _transactions.add(transaction);
