@@ -46,107 +46,124 @@ class TransactionScreen extends StatelessWidget {
                   flex: 3,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            boxShadow: List.empty(),
-                            color: Color.fromARGB(255, 52, 96, 216)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    "Total Balance",
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Rp. ${value.countBalaceTotal()}",
-                                    // textScaleFactor: 3,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
+                    child: Column(
+                      children: [
+                        Column(
+                          children: [
+                            //Total Balance
+                            Container(
+                              width: double.infinity,
+                              child: Card(
+                                color: Colors.blue,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
                                     children: [
                                       Text(
-                                        "Income",
+                                        "Total Balance",
                                         style: TextStyle(
                                           fontSize: 25,
                                           color: Colors.white,
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_downward_rounded,
-                                            size: 50,
-                                            color: Colors.green,
-                                          ),
-                                          Text(
-                                            "Rp. ${value.countIncome()}",
-                                            // textScaleFactor: 2.5,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 35,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
                                       Text(
-                                        "Outcome",
-                                        style: TextStyle(
-                                          fontSize: 25,
+                                        "Rp. ${value.countBalaceTotal()}",
+                                        // textScaleFactor: 3,
+                                        style: const TextStyle(
                                           color: Colors.white,
+                                          fontSize: 40,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_upward_rounded,
-                                            size: 50,
-                                            color: Colors.red,
-                                          ),
-                                          Text(
-                                            "Rp. ${value.countOutcome()}",
-                                            // textScaleFactor: 2.5,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 35,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ],
-                                      ),
                                     ],
                                   ),
-                                ],
-                              )
-                            ],
-                          ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //Income
+                            Card(
+                              color: Colors.yellow,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Income",
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.arrow_downward_rounded,
+                                          size: 50,
+                                          color: Colors.green,
+                                        ),
+                                        Text(
+                                          "Rp. ${value.countIncome()}",
+                                          // textScaleFactor: 2.5,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Card(
+                              color: Colors.orange,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "Outcome",
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.arrow_upward_rounded,
+                                          size: 50,
+                                          color: Colors.red,
+                                        ),
+                                        Text(
+                                          "Rp. ${value.countOutcome()}",
+                                          // textScaleFactor: 2.5,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ),
                 ),

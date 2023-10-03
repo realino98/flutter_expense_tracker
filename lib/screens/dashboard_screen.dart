@@ -58,12 +58,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           PieChartData(
                             sections: [
                               for (int x = 1;
-                                  x < value.transactions.length;
+                                  x < value.categoriesList.length;
                                   x++) ...[
                                 PieChartSectionData(
-                                    value:
-                                        value.transactions[x].amount.toDouble(),
-                                    title: value.transactions[x].needs)
+                                    color: value.categoriesList[x].color,
+                                    value: value.categoriesList[x].total
+                                        .toDouble(),
+                                    title: value.categoriesList[x].categoryName)
                               ],
                             ],
                             centerSpaceRadius: double.infinity,
