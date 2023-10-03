@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/models/transaction_model.dart';
 import 'package:flutter_expense_tracker/provider/transactionProvider.dart';
@@ -30,6 +31,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     var maxWidth = MediaQuery.of(context).size.width;
     return Consumer<TransactionManager>(builder: (context, value, child) {
+      value.fetchCategories();
       print(value.currentMonth);
       return DefaultTabController(
         length: 12,
@@ -50,21 +52,53 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Container(
                     width: maxWidth,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Hello"),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      child: Center(
+                        child: PieChart(
+                          PieChartData(
+                            sections: [
+                              for (int x = 1;
+                                  x < value.transactions.length;
+                                  x++) ...[
+                                PieChartSectionData(
+                                    value:
+                                        value.transactions[x].amount.toDouble(),
+                                    title: value.transactions[x].needs)
+                              ],
+                            ],
+                            centerSpaceRadius: double.infinity,
+                            // read about it in the PieChartData section
+                          ),
+                          swapAnimationDuration:
+                              Duration(milliseconds: 150), // Optional
+                          swapAnimationCurve: Curves.linear, // Optional
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
               Expanded(
                 flex: 4,
-                child: ListView(
-                  children: [
-                    _buildCategoryListTile(value, "Salary",
-                        Icon(Icons.money_rounded), Colors.green),
-                    _buildCategoryListTile(value, "Food",
-                        Icon(Icons.food_bank_rounded), Colors.orange),
-                  ],
+                // child: ListView(
+                //   children: [
+                //     _buildCategoryListTile(value, "Salary",
+                //         Icon(Icons.money_rounded), Colors.green),
+                //     _buildCategoryListTile(value, "Food",
+                //         Icon(Icons.food_bank_rounded), Colors.orange),
+                //   ],
+                // ),
+                child: ListView.builder(
+                  itemCount: value.categoriesList.length,
+                  itemBuilder: (context, index) {
+                    var val = value.categoriesList[index];
+                    return _buildCategoryListTile(
+                        val.categoryName,
+                        Icon(Icons.money_rounded),
+                        Colors.green,
+                        val.itemTotal,
+                        val.total);
+                  },
                 ),
               ),
             ],
@@ -75,10 +109,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   _buildCategoryListTile(
-      TransactionManager value, String category, Icon icon, Color color) {
-    List<Transaction> val = value.transactions
-        .where((element) => element.needs == category)
-        .toList();
+      String category, Icon icon, Color color, int itemTotal, int total) {
     return ListTile(
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(5),
@@ -91,9 +122,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
       title: Text(category),
-      subtitle: Text("${val.length}"),
+      subtitle: Text("${itemTotal}"),
       trailing: Text(
-        "Rp. ${value.countTotal(val)}",
+        "Rp. ${total}",
         style: TextStyle(fontSize: 20),
       ),
     );

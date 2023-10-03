@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_expense_tracker/models/category_model.dart';
 import 'package:flutter_expense_tracker/models/transaction_model.dart';
 import 'package:intl/intl.dart';
 
@@ -6,6 +8,7 @@ class TransactionManager extends ChangeNotifier {
   var formatter = NumberFormat('#,###');
   int _cardSelected = 1;
   DateTime _currentDate = DateTime.now();
+  List<Category> _categories = [];
   final List<Transaction> _transactions = <Transaction>[
     Transaction(
         amount: 1000000,
@@ -16,13 +19,13 @@ class TransactionManager extends ChangeNotifier {
     Transaction(
         amount: 10000,
         isIncome: true,
-        needs: "Food",
+        needs: "Park",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
         amount: 10000,
         isIncome: true,
-        needs: "Food",
+        needs: "Bill",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
@@ -50,13 +53,39 @@ class TransactionManager extends ChangeNotifier {
         source: 0,
         dateTime: DateTime.now()),
   ];
-
+  List<Category> get categoriesList => fetchCategories();
+  List<Category> get categories => _categories;
   List<Transaction> get transactions => List.unmodifiable(_transactions);
   List<Transaction> get transactionsFiltered => _transactions
       .where((element) => element.source == _cardSelected)
       .toList();
   int get cardSelected => _cardSelected;
   int get currentMonth => int.parse(DateFormat("mm").format(_currentDate));
+
+  List<Category> fetchCategories() {
+    List<String> _categoriesTemp = [];
+    for (int i = 0; i < _transactions.length; i++) {
+      if (!_categoriesTemp.contains(_transactions[i].needs))
+        _categoriesTemp.add(_transactions[i].needs);
+    }
+    print(_categoriesTemp);
+    _categories.clear();
+    for (var cat in _categoriesTemp) {
+      _categories.add(Category(
+          categoryName: cat,
+          color: Colors.green,
+          icon: Icon(Icons.money),
+          itemTotal: _transactions
+              .where((element) => element.needs == cat)
+              .toList()
+              .length,
+          total: countTotal(_transactions
+              .where((element) => element.needs == cat)
+              .toList())));
+    }
+    // print(_categories.length);
+    return _categories;
+  }
 
   void addTransaction(Transaction transaction) {
     _transactions.add(transaction);
