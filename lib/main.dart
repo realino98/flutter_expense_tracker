@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ProfileScreen(),
   ];
 
-  int _pageIndex = 1;
+  int _pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {

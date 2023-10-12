@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_expense_tracker/models/category_model.dart';
 import 'package:flutter_expense_tracker/models/transaction_model.dart';
 import 'package:intl/intl.dart';
+import 'dart:math' as math;
 
 class TransactionManager extends ChangeNotifier {
   var formatter = NumberFormat('#,###');
@@ -11,44 +12,44 @@ class TransactionManager extends ChangeNotifier {
   List<Category> _categories = [];
   final List<Transaction> _transactions = <Transaction>[
     Transaction(
-        amount: 1000000,
+        amount: 100000,
         isIncome: true,
         needs: "Salary",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
         amount: 10000,
-        isIncome: true,
+        isIncome: false,
         needs: "Park",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
-        amount: 10000,
-        isIncome: true,
+        amount: 80000,
+        isIncome: false,
         needs: "Bill",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
-        amount: 10000,
+        amount: 38000,
         isIncome: false,
         needs: "Food",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
-        amount: 10000,
+        amount: 12000,
         isIncome: false,
         needs: "Food",
         source: 1,
         dateTime: DateTime.now()),
     Transaction(
-        amount: 10000,
+        amount: 24000,
         isIncome: false,
         needs: "Food",
         source: 2,
         dateTime: DateTime.now()),
     Transaction(
         amount: 10000,
-        isIncome: true,
+        isIncome: false,
         needs: "Food",
         source: 0,
         dateTime: DateTime.now()),
@@ -73,7 +74,8 @@ class TransactionManager extends ChangeNotifier {
     for (var cat in _categoriesTemp) {
       _categories.add(Category(
           categoryName: cat,
-          color: Colors.green,
+          color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+              .withOpacity(1.0),
           icon: Icon(Icons.money),
           itemTotal: _transactions
               .where((element) => element.needs == cat)
@@ -85,6 +87,13 @@ class TransactionManager extends ChangeNotifier {
     }
     // print(_categories.length);
     return _categories;
+  }
+
+  int totalCategory() {
+    var total = fetchCategories()
+        .map((e) => e.total)
+        .reduce((value, element) => value + element);
+    return total;
   }
 
   void addTransaction(Transaction transaction) {
